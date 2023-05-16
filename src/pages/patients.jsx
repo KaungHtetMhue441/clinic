@@ -9,15 +9,19 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 export const Patient = ()=>{
-        // let patientss = [
-    //     {id:"A-0004",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
-    //     {id:"A-0004",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
-    //     {id:"A-0004",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
-    //     {id:"A-0004",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
-    //     {id:"A-0004",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
-    //     {id:"A-0004",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
-    // ];
-    // localStorage.setItem('patients',JSON.stringify(patientss));
+    setData('patients',"");
+        let data = [
+        {id:"A-0004",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
+        {id:"A-0005",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
+        {id:"A-0006",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
+        {id:"A-0007",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
+        {id:"A-0008",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
+        {id:"A-0009",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
+    ];
+    if(!getData('patients')){
+        localStorage.setItem('lastPatientId',"A-0009")
+        localStorage.setItem('patients',JSON.stringify(data));
+    }
 
     let patientss = getData('patients');
     let [patients,setPatients]  = useState(patientss);

@@ -156,14 +156,17 @@ function getPatientId()
 {
     let lastPatientId = localStorage.getItem('lastPatientId');
     lastPatientId = lastPatientId.split('-')
-
+    console.log(lastPatientId);
     if(Number(lastPatientId[1])>=9999){
         lastPatientId[0]= lastPatientId[0].substring(0, lastPatientId[0] - 1)+ String.fromCharCode(lastPatientId[0].charCodeAt(lastPatientId[0].length - 1) + 1);
     }
-
-    lastPatientId[1] = (Number(lastPatientId[1])+1).toString().padStart(4, '0');
+    let lastNumberString = (Number(lastPatientId[1])+1).toString();
+    console.log(Number(lastPatientId[1])+1)
+    console.log(lastNumberString);
+    lastPatientId[1] = lastNumberString.padStart(4, 0);
     lastPatientId[1] = (lastPatientId[1]); //
     lastPatientId = lastPatientId.join('-');
+    console.log(lastPatientId);
     localStorage.setItem('lastPatientId',lastPatientId);
 
     return lastPatientId;
