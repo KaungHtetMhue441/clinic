@@ -1,0 +1,116 @@
+*{
+  font-family: Poppins;
+  font-size: 14px!important;
+  color: #000000;
+}
+:root{
+  --primary-color:rgba(84,186,185,255);
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+.font-075{
+ font-size: 0.75rem;
+}
+.font-14{
+  font-size: 14px;
+}
+.font-22{
+  font-size:22px!important;
+}
+.font-18{
+  font-size: 18!important;
+}
+.font-12{
+  font-size: 12px!important;
+}
+.font-semibold{
+  font-weight: 600!important;
+}
+.font-regular{
+  font-weight: 400!important;
+}
+
+.bg-primary{
+  background-color: var(--primary-color)!important;
+}
+.text-primary{
+  color: var(--primary-color)!important;
+}
+
+.App-header{
+  background-color: #54BAB9;
+  font-weight: 600;
+}
+.main{
+  background-color: #f7e2c8;
+}
+.outline-none{
+  border:none;
+  padding:0 0 3px;
+  background-color: inherit;
+  text-decoration: none;
+}
+.outline-none:focus{
+  outline: none;
+}
+.search-input-wrapper{
+  border: 1px solid;
+  padding:0 5px;
+  border-radius: 10px;
+}
+.search-btn{
+  color: rgba(68, 68, 68, 0.5)!important;
+  border:none;
+  padding:0;
+  margin:0;
+  background-color: inherit;
+}
+.search-btn:focus{
+  outline: none;
+}
+
+.select{
+  border-radius: 10px;
+}
+.rounded-10{
+  border-radius:10px;
+}
+.w-30{
+  width:30%;
+}
+
+.table>thead>tr>th{
+  font-weight: 600!important;
+  color: #54BAB9!important;
+}
+.table>tbody>tr>td{
+  color:#000000;
+  font-weight: 400!important;
+}
+
+.modal-close{
+  right:5px;
+  top:5px
+}
+.modal-title{
+  color:#54BAB9;
+  font-weight:500;
+}
+.modal-subtitle{
+  color:#444444;
+  font-weight: 400;
+}
+
+input{
+  color: #000000;
+}
+
+input>::placeholder{
+color: #ACB3C0;
+}
+
+.text-white{
+  color: #ffffff ;
+}
