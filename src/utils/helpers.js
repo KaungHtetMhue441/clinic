@@ -27,9 +27,49 @@ export const getDateString = (date)=>{
         d = "0"+d;
     }
 
-    return d+"-"+m+"-"+y;
+    return y+"-"+m+"-"+d;
 }
 
 export const getStringToDate = (date)=>{
-    return new Date(date.replaceAll("-", "/"))
+    let arr = date.split("-");
+    if(Number(arr[0])<31){
+        date = arr[2]+"-"+arr[1]+"-"+arr[0];
+    }
+    return new Date(date)
+}
+
+export const formValidateion = (patient,setFormError)=>{
+    const errors = [];
+    if(typeof patient.petName!=="string"){
+        errors.push("Pet Name must be string ");
+    }
+    if(typeof patient.pawrent!=="string"){
+        errors.push("Pawrent must be string ");
+    }
+    if(typeof patient.status!=="string"){
+        errors.push("Status must be string ");
+    }
+
+    if(typeof patient.breed!=="string"){
+        errors.push("Breed must be string ");
+    }
+    if(!patient.gender){
+        errors.push("Male or female  must be choose")
+    }
+    if(!patient.ph_no){
+        errors.push("Phone Number field is required");
+    }
+    if(typeof patient.address!=="string"){
+        errors.push("address filed must be string");
+    }
+
+    if(errors.length > 0){
+        setFormError(errors.map((error)=>{
+            return <li className="text-danger">{error}</li>
+        }))
+        return false;
+    }
+    setFormError([]);
+    return true;
+    
 }
