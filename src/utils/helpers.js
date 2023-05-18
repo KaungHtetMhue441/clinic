@@ -11,5 +11,25 @@ export const getData = (name)=>{
 }
 
 export const setData = (name,data)=>{
-    return localStorage.setItem(name,JSON.stringify(data));
+    localStorage.setItem(name,JSON.stringify(data));
+
+}
+
+export const getDateString = (date)=>{
+    let d = date.getDate();
+    let m = date.getMonth()+1;
+    let y = date.getFullYear();
+
+    if(m<10){
+        m = "0"+m;
+    }
+    if(d<10){
+        d = "0"+d;
+    }
+
+    return d+"-"+m+"-"+y;
+}
+
+export const getStringToDate = (date)=>{
+    return new Date(date.replaceAll("-", "/"))
 }

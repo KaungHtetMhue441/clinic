@@ -1,14 +1,24 @@
-import { useState } from "react";
 import { usePatientsContext } from "../../contexts/patientsContext";
 import { useUpdatePatientsContext } from "../../contexts/updatePatientContext";
-import { setData } from "../../utils/helpers";
+import {getStringToDate,getDateString, setData } from "../../utils/helpers";
+import DatePicker from "react-datepicker";
+import { useEffect, useState } from "react";
+
 export  const UpdateForm = ()=>{
+
+
 const {patients,setPatients} = usePatientsContext();
 const {patient,setPatient} = useUpdatePatientsContext();
+const [startDate, setStartDate] = useState("");
+
+
+useEffect(()=>{
+    setStartDate(patient.date?getStringToDate(patient.date):new Date())
+},[patient])
 
 function getpatient(id)
 {
-     setPatient(JSON.parse(localStorage.getItem('patients')));
+    setPatient(JSON.parse(localStorage.getItem('patients')));
     const gender = Object.values(document.getElementsByClassName("radio")).map((element)=>{
         if(element.value=patient.gender){
             element.checked = true;
@@ -103,10 +113,7 @@ return (
                 </div> 
                 <div className="col-5 justify-content-between">
                     <label htmlFor="">Date</label>
-                    <input type="text" className=" form-control form-control-sm " 
-                    value={patient.date}
-                    onChange={(event)=>{setPatient({...patient,date:event.target.value})}}
-                    />
+                    <DatePicker selected={startDate} onChange={(date) =>{setStartDate(date);setPatient({...patient,date:getDateString(date)})}} />
                 </div>
                 <div className="col-5 justify-content-between">
                     <label htmlFor="">Phone Number</label>

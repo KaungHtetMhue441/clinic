@@ -9,7 +9,6 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 export const Patient = ()=>{
-    setData('patients',"");
         let data = [
         {id:"A-0004",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
         {id:"A-0005",petName:"akai",status:"active",pawrent:"haha",breed:"hshsh",gender:"male",date:"2014-03-03",ph_no:"09795889472",address:"mayangon"},
@@ -29,15 +28,17 @@ export const Patient = ()=>{
 
     const [status,setStatus]= useState("");
     const [breed,setBreed] = useState("");
+    const [search,setSearch] =useState("");
+
 
     const statusList = ['active','inactive',].map((item)=>{
         return(
-            <option value={item} key={getKey()}>{item}</option>
+            <option value={item}>{item}</option>
         )
     });
     const breedList = ['hello','haha',].map((item)=>{
         return(
-            <option value={item} key={getKey()}>{item}</option>
+            <option value={item}>{item}</option>
         )
     });
 
@@ -77,7 +78,6 @@ export const Patient = ()=>{
                    </td>
             </tr>
         )
-
     })
 
         
@@ -104,49 +104,42 @@ export const Patient = ()=>{
               }
             ]
           });
-
     }
 
-    const search = (value)=>{
-        let newPatients  = getData('patients');
-
-        if(status || breed){
-            newPatients = newPatients.filter((item)=>{
-                return (status&&status==item.status)||(breed&&item.breed==breed);
-            })
-        }
-        if(value){  
-            newPatients = newPatients.filter((item)=>{
-                item = Object.values(item);
-                for(let i=0; i<item.length;i++){
-                    if(item[i]&&item[i].includes(value)){
-                        return true
-                    }
-                }
-                return false;
-            })
-            setPatients(newPatients);
-            return;
-        }
-    setPatients(newPatients);
-    }
 
     useEffect(()=>{
-        if(breed||status){
-            console.log(status);
-            let newPatients = getData('patients');
-            let newPatient = newPatients.filter((item)=>
-            {
-                if(status&&breed)
-                {
-                    return item.status==status&&item.breed==breed;
-                }
-                return item.status==status||item.breed==breed;
-            })
-            setPatients(newPatient)
+        let newPatients = getData('patients');
+
+        if(breed||status||search){
+            
+            if(status){
+                newPatients = newPatients.filter((item)=>{
+                    return item.status === status;
+                })
+            }
+
+            if(breed){
+                newPatients = newPatients.filter((item)=>{
+                    return item.breed === breed;
+                })
+            }
+
+            if(search){
+                newPatients = newPatients.filter((item)=>{
+                    item = Object.values(item);
+                    for(let i=0; i<item.length;i++){
+                        if(item[i]&&item[i].includes(search)){
+                            return true
+                        }
+                    }
+                    return false;
+                })
+            }
         }
 
-    },[status,breed]);
+        setPatients(newPatients);
+
+    },[status,breed,search]);
 
     return(
         <>
@@ -156,7 +149,7 @@ export const Patient = ()=>{
                     <div className="col-12">
                         <div className="search-input-wrapper px-2">
                             <input className="outline-none" type="text" placeholder="search" 
-                                onChange={(event)=>search(event.target.value)}
+                                onChange={(event)=>{setSearch(event.target.value);}}
                             />
                             <button className="float-end search-btn">
                                 <img src={getImage('search.png')}  alt=""/>
@@ -168,7 +161,6 @@ export const Patient = ()=>{
                             <div className="col-6">
                                 <select className="form-select form-select-sm select" name="status" id="status"
                                 onChange={(event)=>{
-                                    console.log(event.target.value)
                                 setStatus(event.target.value);
                                 //     if(event.target.value!=""){
                                 //         let newPatient = patients.filter((item)=>

@@ -1,36 +1,40 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { usePatientsContext } from "../../contexts/patientsContext";
-import { getKey, setData } from "../../utils/helpers";
+import { getDateString,setData } from "../../utils/helpers";
+import DatePicker from "react-datepicker";
+
 export  const AddForm = ()=>{
+
 const {patients,setPatients} = usePatientsContext();
+const [startDate, setStartDate] = useState(new Date());
 
 const [patient,setPatient] = useState(
-    {id:"",petName:"",status:"",pawrent:"",breed:"",gender:"",date:"",ph_no:"",address:"",city:"",township:""}
+    {id:"",petName:"",status:"",pawrent:"",breed:"",gender:"",date:getDateString(startDate),ph_no:"",address:"",city:"",township:""}
 )
 const status = ['active','inactive',].map((item)=>{
     return(
-        <option value={item} key={getKey()}>{item}</option>
+        <option value={item}>{item}</option>
     )
 });
 const breed = ['hello','haha',].map((item)=>{
     return(
-        <option value={item} key={getKey()}>{item}</option>
+        <option value={item}>{item}</option>
     )
 });
 const city = ['Nay Pyi Taw','lawei',].map((item)=>{
     return(
-        <option value={item} key={getKey()}>{item}</option>
+        <option value={item}>{item}</option>
     )
 });
 const township = ['Nay Pyi Taw','Yangon',].map((item)=>{
     return(
-        <option value={item} key={getKey()}>{item}</option>
+        <option value={item}>{item}</option>
     )
 });
 
 function refreshForm()
 {
-    setPatient({id:"",petName:"",status:"",pawrent:"",breed:"",gender:"",date:"",ph_no:"",address:"",city:"",township:""})
+    setPatient({id:"",petName:"",status:"",pawrent:"",breed:"",gender:"",date:getDateString(startDate),ph_no:"",address:"",city:"",township:""})
     const gender = Object.values(document.getElementsByClassName("radio")).map((element)=>element.checked=false);
 }
 return (
@@ -55,7 +59,7 @@ return (
                 <div className="col-5 justify-content-between">
                     <label htmlFor="">Status</label>
 
-                    <select name="status" className="form-select form-select-sm" id="status" onChange={(event)=>{setPatient({...patient,status:event.target.value})}}>
+                    <select name="status" className="form-select form-select-sm" id="status" onChange={(event)=>{return setPatient({...patient,status:event.target.value})}}>
                         <option value="" selected>Please Choose status</option>
                         {status}
                     </select>
@@ -68,8 +72,8 @@ return (
                 </div> 
                 <div className="col-5 justify-content-between">
                     <label htmlFor="">Breed</label>
-                    <select name="breed" className="form-select form-select-sm" id="breed" onChange={(event)=>{setPatient({...patient,breed:event.target.value})}}>
-                        <option value="" selected>Please Choose breed</option>
+                    <select name="breed" className="form-select form-select-sm" id="breed" onChange={(event)=>{return setPatient({...patient,breed:event.target.value})}}>
+                        <option value="" >Please Choose breed</option>
                         {breed}
                     </select>
                 </div> 
@@ -95,10 +99,7 @@ return (
                 </div> 
                 <div className="col-5 justify-content-between">
                     <label htmlFor="">Date</label>
-                    <input type="text" className=" form-control form-control-sm " 
-                    value={patient.date}
-                    onChange={(event)=>{setPatient({...patient,date:event.target.value})}}
-                    />
+                    <DatePicker selected={startDate} onChange={(date) =>{setStartDate(date);setPatient({...patient,date:getDateString(date)})}} />
                 </div>
                 <div className="col-5 justify-content-between">
                     <label htmlFor="">Phone Number</label>
@@ -117,7 +118,7 @@ return (
                 <div className="col-5 justify-content-between">
                     <label htmlFor="">City</label>
                     <select name="city" className="form-select form-select-sm" id="city" 
-                        onChange={(event)=>{setPatient({...patient,city:event.target.value})}}
+                        onChange={(event)=>{return setPatient({...patient,city:event.target.value})}}
                     >
                         <option value="" selected>Please Choose breed</option>
                         {city}
@@ -126,7 +127,7 @@ return (
                 <div className="col-5 justify-content-between">
                 <label htmlFor="">Township</label>
                     <select name="township" className="form-select form-select-sm" id="township" 
-                        onChange={(event)=>{setPatient({...patient,township:event.target.value})}}
+                        onChange={(event)=>{return setPatient({...patient,township:event.target.value})}}
                     >
                         <option value="" selected>Please Choose breed</option>
                         {city}
@@ -147,22 +148,18 @@ return (
 
 function addNewPatient(){
     let newPatients = [...patients,{...patient,id:getPatientId()}];
-    console.log(patient);
     setPatients(newPatients);
-    setData('patients',patients)
+    setData('patients',newPatients)
     refreshForm();
 }
 function getPatientId()
 {
     let lastPatientId = localStorage.getItem('lastPatientId');
     lastPatientId = lastPatientId.split('-')
-    console.log(lastPatientId);
     if(Number(lastPatientId[1])>=9999){
         lastPatientId[0]= lastPatientId[0].substring(0, lastPatientId[0] - 1)+ String.fromCharCode(lastPatientId[0].charCodeAt(lastPatientId[0].length - 1) + 1);
     }
     let lastNumberString = (Number(lastPatientId[1])+1).toString();
-    console.log(Number(lastPatientId[1])+1)
-    console.log(lastNumberString);
     lastPatientId[1] = lastNumberString.padStart(4, 0);
     lastPatientId[1] = (lastPatientId[1]); //
     lastPatientId = lastPatientId.join('-');
